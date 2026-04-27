@@ -1,6 +1,6 @@
 // ===== CONFIG =====
 const ADMIN_PASSWORD = "thennu123";
-const WHATSAPP_NUMBER = "919003615893"; // Your number with country code, NO + sign
+const WHATSAPP_NUMBER = "919629603245"; // Your number with country code, NO + sign
 const INSTAGRAM_URL = "https://www.instagram.com/thennu_artist_143?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="; // Replace with your Instagram page URL
 
 // ===== DEFAULT PRODUCTS =====
