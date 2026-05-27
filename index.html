@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thennu Artist</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header class="hero">
+
+    <nav class="nav">
+
+      <div class="logo">
+        Thennu Artist ✨
+      </div>
+
+      <div class="nav-buttons">
+
+        <button class="icon-btn" onclick="toggleCart()">
+          🛒
+          <span id="cartCount">0</span>
+        </button>
+
+        <button class="icon-btn" onclick="openInstagram()">
+          📷
+        </button>
+
+        <button class="icon-btn" onclick="openWhatsApp()">
+          💬
+        </button>
+
+        <button class="icon-btn" onclick="openAdminLogin()">
+          ⚙
+        </button>
+
+      </div>
+
+    </nav>
+
+    <div class="hero-content">
+
+      <h1>
+        Customized Keychains
+      </h1>
+
+      <p>
+        Personalized gifts crafted with love ❤️
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- PRODUCTS -->
+
+  <section class="products-section">
+
+    <div class="section-title">
+      Our Products
+    </div>
+
+    <div class="products-grid" id="products"></div>
+
+  </section>
+
+
+  <!-- CART -->
+
+  <div class="cart" id="cart">
+
+    <div class="cart-header">
+
+      <h3>Your Cart</h3>
+
+      <button onclick="toggleCart()">
+        ✕
+      </button>
+
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-footer">
+
+      <h3>
+        Total: ₹<span id="total">0</span>
+      </h3>
+
+      <button class="btn" onclick="sendWhatsAppOrder()">
+        Order on WhatsApp
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- CUSTOM MODAL -->
+
+  <div class="modal" id="modal">
+
+    <div class="modal-box">
+
+      <button class="close-btn" onclick="closeModal()">
+        ✕
+      </button>
+
+      <h2>
+        Customize Product
+      </h2>
+
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="Enter custom name"
+      />
+
+      <button class="btn" onclick="addToCart()">
+        Add To Cart
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- REVIEWS -->
+
+  <section class="reviews-section">
+
+    <div class="section-title">
+      Customer Reviews ⭐
+    </div>
+
+    <div class="review-form">
+
+      <input
+        type="text"
+        id="revName"
+        placeholder="Your name"
+      />
+
+      <select id="revProduct">
+        <option value="">
+          Select Product
+        </option>
+
+        <option>
+          Couple Keychain
+        </option>
+
+        <option>
+          Anime Keychain
+        </option>
+
+      </select>
+
+      <textarea
+        id="revText"
+        placeholder="Write your review"
+      ></textarea>
+
+      <div class="star-select">
+
+        <span onclick="setRating(1)">★</span>
+        <span onclick="setRating(2)">★</span>
+        <span onclick="setRating(3)">★</span>
+        <span onclick="setRating(4)">★</span>
+        <span onclick="setRating(5)">★</span>
+
+      </div>
+
+      <button class="btn" onclick="submitReview()">
+        Submit Review
+      </button>
+
+    </div>
+
+    <div class="reviews-grid" id="reviewsGrid"></div>
+
+  </section>
+
+
+  <!-- ADMIN -->
+
+  <div class="admin-overlay" id="adminOverlay">
+
+    <div class="admin-login" id="adminLogin">
+
+      <h2>Admin Login</h2>
+
+      <input
+        type="password"
+        id="adminPass"
+        placeholder="Enter password"
+      />
+
+      <button class="btn" onclick="checkAdminPass()">
+        Login
+      </button>
+
+      <p
+        id="loginError"
+        style="display:none;color:red;margin-top:10px"
+      >
+        Wrong password
+      </p>
+
+    </div>
+
+
+    <div
+      class="admin-dashboard"
+      id="adminDashboard"
+      style="display:none"
+    >
+
+      <div class="admin-top">
+
+        <h2>
+          Product Management
+        </h2>
+
+        <button onclick="closeAdmin()">
+          ✕
+        </button>
+
+      </div>
+
+      <div class="admin-form">
+
+        <input type="hidden" id="editId"/>
+
+        <input
+          type="text"
+          id="pCode"
+          placeholder="Auto product code"
+          readonly
+        />
+
+        <input
+          type="text"
+          id="pName"
+          placeholder="Product name"
+        />
+
+        <input
+          type="number"
+          id="pPrice"
+          placeholder="Price"
+        />
+
+        <input
+          type="number"
+          id="pOld"
+          placeholder="Old price"
+        />
+
+        <input
+          type="text"
+          id="pTag"
+          placeholder="Tag (BESTSELLER)"
+        />
+
+        <input
+          type="text"
+          id="pImage"
+          placeholder="Paste image link"
+        />
+
+        <button class="btn" onclick="saveProduct()">
+          Save Product
+        </button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Tag</th>
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="adminProductList"></tbody>
+
+        </table>
+
+        <div
+          id="emptyState"
+          style="
+            display:none;
+            padding:30px;
+            text-align:center;
+            color:#aaa
+          "
+        >
+          No products added yet
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
