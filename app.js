@@ -595,27 +595,27 @@ async function saveProduct(){
 
     code,
 
-    name:
+    Name:
       document.getElementById('pName').value,
 
-    price:
+    Price:
       document.getElementById('pPrice').value,
 
-    old:
+    Old:
       document.getElementById('pOld').value,
 
-    tag:
+    Tag:
       document.getElementById('pTag').value,
 
-    image:
+    Image:
       document.getElementById('pImage').value
 
   };
 
-  if(!product.name)
+  if(!product.Name)
     return alert("Enter product name");
 
-  if(!product.price)
+  if(!product.Price)
     return alert("Enter price");
 
   if(code){
