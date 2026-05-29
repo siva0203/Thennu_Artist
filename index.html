@@ -1,333 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thennu Artist</title>
-
-  <link rel="stylesheet" href="style.css"/>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thennu Artist - Customized Keychain Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP for premium animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
-
 <body>
-
-  <!-- HEADER -->
-
-  <header class="hero">
-
-    <nav class="nav">
-
-      <div class="logo">
-        Thennu Artist ✨
-      </div>
-
-      <div class="nav-buttons">
-
-        <button class="icon-btn" onclick="toggleCart()">
-          🛒
-          <span id="cartCount">0</span>
-        </button>
-
-        <button class="icon-btn" onclick="openInstagram()">
-          📷
-        </button>
-
-        <button class="icon-btn" onclick="openWhatsApp()">
-          💬
-        </button>
-
-        <button class="icon-btn" onclick="openAdminLogin()">
-          ⚙
-        </button>
-
-      </div>
-
+    <!-- Navigation / Brand header -->
+    <nav class="navbar" data-testid="main-navbar">
+        <div class="nav-container">
+            <div class="logo" data-testid="brand-logo">
+                <!-- Replace src with your logo file path or your own logo image -->
+                <img id="brandLogoImg" src="https://via.placeholder.com/48x48?text=Logo" alt="Brand Logo" class="brand-logo-image">
+                <div class="brand-text">
+                    <span class="brand-name">Thennu Artist</span>
+                    <span class="brand-note">Custom Keychains</span>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()" data-testid="cart-toggle-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" data-testid="cart-count">0</span>
+                </button>
+                <button class="admin-btn" onclick="showAdminLogin()" data-testid="admin-login-btn">
+                    <i class="fas fa-user-shield"></i>
+                </button>
+            </div>
+        </div>
     </nav>
 
-    <div class="hero-content">
-
-      <h1>
-        Customized Keychains
-      </h1>
-
-      <p>
-        Personalized gifts crafted with love ❤️
-      </p>
-
-    </div>
-
-  </header>
-
-
-  <!-- PRODUCTS -->
-
-  <section class="products-section">
-
-    <div class="section-title">
-      Our Products
-    </div>
-
-    <div class="products-grid" id="products"></div>
-
-  </section>
-
-
-  <!-- CART -->
-
-  <div class="cart" id="cart">
-
-    <div class="cart-header">
-
-      <h3>Your Cart</h3>
-
-      <button onclick="toggleCart()">
-        ✕
-      </button>
-
-    </div>
-
-    <div id="cartItems"></div>
-
-    <div class="cart-footer">
-
-      <h3>
-        Total: ₹<span id="total">0</span>
-      </h3>
-
-      <button class="btn" onclick="sendWhatsAppOrder()">
-        Order on WhatsApp
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- CUSTOM MODAL -->
-
-  <div class="modal" id="modal">
-
-    <div class="modal-box">
-
-      <button class="close-btn" onclick="closeModal()">
-        ✕
-      </button>
-
-      <h2>
-        Customize Product
-      </h2>
-
-      <input
-        type="text"
-        id="nameInput"
-        placeholder="Enter custom name"
-      />
-
-      <button class="btn" onclick="addToCart()">
-        Add To Cart
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- REVIEWS -->
-
-  <section class="reviews-section">
-
-    <div class="section-title">
-      Customer Reviews ⭐
-    </div>
-
-    <div class="review-form">
-
-      <input
-        type="text"
-        id="revName"
-        placeholder="Your name"
-      />
-
-      <select id="revProduct">
-        <option value="">
-          Select Product
-        </option>
-
-        <option>
-          Couple Keychain
-        </option>
-
-        <option>
-          Anime Keychain
-        </option>
-
-      </select>
-
-      <textarea
-        id="revText"
-        placeholder="Write your review"
-      ></textarea>
-
-      <div class="star-select">
-
-        <span onclick="setRating(1)">★</span>
-        <span onclick="setRating(2)">★</span>
-        <span onclick="setRating(3)">★</span>
-        <span onclick="setRating(4)">★</span>
-        <span onclick="setRating(5)">★</span>
-
-      </div>
-
-      <button class="btn" onclick="submitReview()">
-        Submit Review
-      </button>
-
-    </div>
-
-    <div class="reviews-grid" id="reviewsGrid"></div>
-
-  </section>
-
-
-  <!-- ADMIN -->
-
-  <div class="admin-overlay" id="adminOverlay">
-
-    <div class="admin-login" id="adminLogin">
-
-      <h2>Admin Login</h2>
-
-      <input
-        type="password"
-        id="adminPass"
-        placeholder="Enter password"
-      />
-
-      <button class="btn" onclick="checkAdminPass()">
-        Login
-      </button>
-
-      <p
-        id="loginError"
-        style="display:none;color:red;margin-top:10px"
-      >
-        Wrong password
-      </p>
-
-    </div>
-
-
-    <div
-      class="admin-dashboard"
-      id="adminDashboard"
-      style="display:none"
-    >
-
-      <div class="admin-top">
-
-        <h2>
-          Product Management
-        </h2>
-
-        <button onclick="closeAdmin()">
-          ✕
-        </button>
-
-      </div>
-
-      <div class="admin-form">
-
-        <input type="hidden" id="editId"/>
-
-        <input
-          type="text"
-          id="pCode"
-          placeholder="Auto product code"
-          readonly
-        />
-
-        <input
-          type="text"
-          id="pName"
-          placeholder="Product name"
-        />
-
-        <input
-          type="number"
-          id="pPrice"
-          placeholder="Price"
-        />
-
-        <input
-          type="number"
-          id="pOld"
-          placeholder="Old price"
-        />
-
-        <input
-          type="text"
-          id="pTag"
-          placeholder="Tag (BESTSELLER)"
-        />
-
-        <input
-          type="text"
-          id="pImage"
-          placeholder="Paste image link"
-        />
-
-        <button class="btn" onclick="saveProduct()">
-          Save Product
-        </button>
-
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>Image</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Tag</th>
-              <th>Actions</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody id="adminProductList"></tbody>
-
-        </table>
-
-        <div
-          id="emptyState"
-          style="
-            display:none;
-            padding:30px;
-            text-align:center;
-            color:#aaa
-          "
-        >
-          No products added yet
+    <!-- Hero Section / Premium banner -->
+    <section class="hero" data-testid="hero-section">
+        <div class="hero-content">
+            <span class="hero-tagline">Luxury custom keepsakes</span>
+            <h1 class="hero-title" data-testid="hero-title">Craft your story in every detail</h1>
+            <p class="hero-subtitle" data-testid="hero-subtitle">Curated keychains with premium finishes, elegant packaging and handcrafted personalization.</p>
+            <div class="hero-actions">
+                <button class="cta-btn" onclick="scrollToProducts()" data-testid="shop-now-btn">
+                    Shop Now
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+                <a class="secondary-link" href="https://www.instagram.com/thennu_artist_143/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noreferrer">
+                    <i class="fab fa-instagram"></i> Visit Instagram
+                </a>
+            </div>
+            <div class="hero-badges">
+                <div class="hero-badge"><i class="fas fa-crown"></i>Premium Finish</div>
+                <div class="hero-badge"><i class="fas fa-gift"></i>Gift-ready</div>
+                <div class="hero-badge"><i class="fas fa-shield-alt"></i>Trusted Quality</div>
+            </div>
         </div>
+        <div class="hero-decoration">
+            <div class="float-element float-1"></div>
+            <div class="float-element float-2"></div>
+            <div class="float-element float-3"></div>
+        </div>
+    </section>
 
-      </div>
+    <!-- Features Section / Why choose us -->
+    <section class="feature-section" data-testid="features-section">
+        <div class="section-header">
+            <h2 class="section-title">Why choose Thennu Artist?</h2>
+            <p class="section-subtitle">Exclusive craftsmanship paired with premium presentation for every order.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-gem"></i>
+                <h3>Luxury materials</h3>
+                <p>High-quality metals, polished wood and elegant engraving that feels premium.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h3>Handcrafted care</h3>
+                <p>Each piece is inspected and finished with the attention it deserves.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-box-open"></i>
+                <h3>Gift-ready packaging</h3>
+                <p>Beautiful packaging makes every order perfect for gifting and special moments.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-check"></i>
+                <h3>Trusted service</h3>
+                <p>Fast replies, easy ordering and care taken on every customization request.</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- Products Section -->
+    <section class="products-section" id="products" data-testid="products-section">
+        <div class="section-header">
+            <h2 class="section-title" data-testid="products-title">Our Collection</h2>
+            <p class="section-subtitle" data-testid="products-subtitle">Each piece tells your unique story</p>
+        </div>
+        <div class="products-grid" id="productsGrid" data-testid="products-grid">
+            <!-- Products will be loaded here dynamically -->
+            <div class="loading" data-testid="products-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading premium collection...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" data-testid="reviews-section">
+        <div class="section-header">
+            <h2 class="section-title" data-testid="reviews-title">Customer Love</h2>
+            <p class="section-subtitle" data-testid="reviews-subtitle">What our customers say</p>
+            <button class="btn-secondary" onclick="showReviewForm()" style="margin-top:1rem">
+                <i class="fas fa-star"></i> Leave a Review
+            </button>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid" data-testid="reviews-grid">
+            <!-- Reviews will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-testid="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Thennu Artist</h3>
+                <p>Crafting memories, one keychain at a time</p>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><i class="fab fa-whatsapp"></i> +91 96296 03245</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Thennu Artist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar" data-testid="cart-sidebar">
+        <div class="cart-header">
+            <h3 data-testid="cart-title">Your Cart</h3>
+            <button class="close-cart" onclick="toggleCart()" data-testid="close-cart-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems" data-testid="cart-items">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total" data-testid="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="totalAmount" data-testid="total-amount">₹0</span>
+            </div>
+            <button class="order-btn" onclick="placeOrder()" data-testid="place-order-btn">
+                <i class="fab fa-whatsapp"></i>
+                Order via WhatsApp
+            </button>
+        </div>
     </div>
 
-  </div>
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal" data-testid="admin-login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-testid="admin-modal-title">Admin Login</h3>
+                <button class="close-modal" onclick="closeModal('adminLoginModal')" data-testid="close-admin-login-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="password" id="adminPassword" placeholder="Enter admin password" class="input-field" data-testid="admin-password-input">
+                <button class="btn-primary" onclick="adminLogin()" data-testid="admin-login-submit-btn">Login</button>
+                <p class="error-message" id="loginError" data-testid="login-error-message"></p>
+            </div>
+        </div>
+    </div>
 
+    <!-- Admin Dashboard Modal -->
+    <div class="modal" id="adminDashboard" data-testid="admin-dashboard-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 data-testid="admin-dashboard-title">Admin Dashboard</h3>
+                <button class="close-modal" onclick="closeModal('adminDashboard')" data-testid="close-admin-dashboard-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-actions">
+                    <button class="btn-primary" onclick="showAddProduct()" data-testid="add-product-btn">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                    <button class="btn-secondary" onclick="showLogoSettings()" data-testid="logo-settings-btn">
+                        <i class="fas fa-image"></i> Logo Settings
+                    </button>
+                </div>
+                <div class="products-table" id="adminProductsTable" data-testid="admin-products-table">
+                    <!-- Products table will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <script src="app.js"></script>
+    <!-- Add/Edit Product Modal -->
+    <div class="modal" id="productFormModal" data-testid="product-form-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="productFormTitle" data-testid="product-form-title">Add Product</h3>
+                <button class="close-modal" onclick="closeModal('productFormModal')" data-testid="close-product-form-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" onsubmit="saveProduct(event)" data-testid="product-form">
+                    <input type="hidden" id="productId">
+                    <input type="hidden" id="productCode">
+                    
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="productName" required class="input-field" data-testid="product-name-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="productPrice" required class="input-field" data-testid="product-price-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Old Price (₹) - Optional</label>
+                        <input type="number" id="productOldPrice" class="input-field" data-testid="product-old-price-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Image URL (Google Drive or direct link)</label>
+                        <input type="text" id="productImage" required class="input-field" data-testid="product-image-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tag - Optional (e.g., BESTSELLER)</label>
+                        <input type="text" id="productTag" class="input-field" data-testid="product-tag-input">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" data-testid="save-product-btn">Save Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!-- Customize Product Modal -->
+    <div class="modal" id="customizeModal" data-testid="customize-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-testid="customize-modal-title">Customize Your Keychain</h3>
+                <button class="close-modal" onclick="closeModal('customizeModal')" data-testid="close-customize-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="customize-product-info" id="customizeProductInfo" data-testid="customize-product-info">
+                    <!-- Product info will be shown here -->
+                </div>
+                <div class="form-group">
+                    <label>Custom Name/Text</label>
+                    <input type="text" id="customText" placeholder="Enter name or text to be engraved" class="input-field" data-testid="custom-text-input">
+                </div>
+                <button class="btn-primary" onclick="addToCart()" data-testid="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+            <!-- Logo Settings Modal (Admin) -->
+            <div class="modal" id="logoSettingsModal" data-testid="logo-settings-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Logo Settings</h3>
+                        <button class="close-modal" onclick="closeModal('logoSettingsModal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="muted">Paste a direct URL to your logo image (PNG/SVG/JPG). It will be stored in browser `localStorage` for now.</p>
+                        <div class="form-group">
+                            <label>Logo URL</label>
+                            <input type="text" id="logoUrlInput" class="input-field" placeholder="https://example.com/logo.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Preview</label>
+                            <div style="display:flex;align-items:center;gap:1rem">
+                                <img id="logoPreview" src="https://via.placeholder.com/48x48?text=Logo" alt="logo preview" style="width:60px;height:60px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)">
+                                <div>
+                                    <button class="btn-primary" onclick="saveLogo()">Save Logo</button>
+                                    <button class="btn-secondary" onclick="resetLogo()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Confirmation Modal -->
+            <div class="modal" id="orderConfirmModal" data-testid="order-confirm-modal">
+                <div class="modal-content modal-large">
+                    <div class="modal-header">
+                        <h3>Confirm Your Order</h3>
+                        <button class="close-modal" onclick="closeModal('orderConfirmModal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="orderConfirmDetails"></div>
+                        <div style="display:flex;gap:1rem;margin-top:1.25rem">
+                            <button class="btn-primary" onclick="confirmOrder()">Confirm & Open WhatsApp</button>
+                            <button class="btn-secondary" onclick="closeModal('orderConfirmModal')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Review Submission Modal -->
+    <div class="modal" id="reviewFormModal" data-testid="review-form-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Share Your Experience</h3>
+                <button class="close-modal" onclick="closeModal('reviewFormModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" id="reviewName" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating *</label>
+                        <div class="star-rating" id="starRating">
+                            <span class="star" onclick="setRating(1)">★</span>
+                            <span class="star" onclick="setRating(2)">★</span>
+                            <span class="star" onclick="setRating(3)">★</span>
+                            <span class="star" onclick="setRating(4)">★</span>
+                            <span class="star" onclick="setRating(5)">★</span>
+                        </div>
+                        <input type="hidden" id="reviewRating" value="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Review *</label>
+                        <textarea id="reviewText" class="input-field" placeholder="Share your feedback..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Post Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
